@@ -7,9 +7,7 @@ const { PORT } = environmentVariables
 
 connectDB()
   .then(() => {
-    app.listen(PORT, () =>
-      logger.log({ level: 'info', message: `Server started on port ${PORT}` })
-    )
+    app.listen(PORT, () => logger.info(`Server started on port ${PORT}`))
   })
   .catch((error) => {
     logger.error(error)
