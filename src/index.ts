@@ -1,3 +1,9 @@
+import logger from './utils/logger'
+import environmentVariables from './config/env'
 import app from './app'
 
-app.listen(3000, () => console.log('server starting on port 300!'))
+const { PORT } = environmentVariables
+
+app.listen(PORT, () =>
+  logger.log({ level: 'info', message: `Server started on port ${PORT}` })
+)

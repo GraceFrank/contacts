@@ -1,46 +1,52 @@
-import winston, { format } from 'winston'
-import winstonTimestampColorize from 'winston-timestamp-colorize'
+import winston from 'winston'
+import env from '../config/env'
 
-export const logProps = {
-  colors: {
-    error: 'brightRed',
-    warn: 'brightYellow',
-    info: 'brightCyan',
-    verbose: 'brightWhite',
-    debug: 'brightBlue',
-    silly: 'brightMagenta'
-  },
-  filename: 'debug.log'
+const levels = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  debug: 4
 }
 
-winston.format.colorize().addColors(logProps.colors)
+const level = () => {
+  const { NODE_ENV } = env
 
-const options: winston.LoggerOptions = {
-  transports: [
-    new winston.transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        format.colorize({ all: true }),
-        format.simple(),
-        winstonTimestampColorize({ color: 'green' }),
-        format.printf(
-          (msg) => `${msg.level}: ${msg.message} - ${msg.timestamp}`
-        )
-      )
-    }),
-    new winston.transports.File({
-      filename: logProps.filename,
-      format: format.combine(
-        format.timestamp(),
-        format.simple(),
-        format.printf(
-          (msg) => `${msg.level}: ${msg.message} - ${msg.timestamp}`
-        )
-      )
-    })
-  ]
+  return NODE_ENV === 'development' ? 'debug' : 'warn'
 }
 
-const logger = winston.createLogger(options)
+const colors = {
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  http: 'magenta',
+  debug: 'white'
+}
 
-export default logger
+winston.addColors(colors)
+
+const format = winston.format.combine(
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
+  winston.format.colorize({ all: true }),
+  winston.format.printf(
+    (info) => `${info.timestamp} ${info.level}: ${info.message}`
+  )
+)
+
+const transports = [
+  new winston.transports.Console(),
+  new winston.transports.File({
+    filename: 'logs/error.log',
+    level: 'error'
+  }),
+  new winston.transports.File({ filename: 'logs/all.log' })
+]
+
+const Logger = winston.createLogger({
+  level: level(),
+  levels,
+  format,
+  transports
+})
+
+export default Logger
