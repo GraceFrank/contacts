@@ -23,4 +23,10 @@ const contactSchema: Schema = new Schema(
   { timestamps: true }
 )
 
+// hooks
+contactSchema.post('save', async function (doc, next) {
+  console.log(doc, this.contact)
+  next()
+})
+
 export default model<IContact>('contacts', contactSchema)
