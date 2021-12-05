@@ -23,4 +23,4 @@ const contactSchema: Schema = new Schema(
   { timestamps: true }
 )
 
-export default model<IContact>('Contact', contactSchema)
+export default model<IContact>('contacts', contactSchema)
