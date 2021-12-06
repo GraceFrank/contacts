@@ -27,8 +27,7 @@ const contactChangeSchema = new Schema(
       trim: true,
       lowercase: true,
       minlength: 4,
-      maxlength: 255,
-      unique: true
+      maxlength: 255
     },
 
     phone: {

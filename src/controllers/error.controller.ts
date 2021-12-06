@@ -11,7 +11,7 @@ const handleErrors = async (
 ): Promise<void> => {
   Logger.error(`${err.message}\n${err.errors}`)
 
-  res.status(500).json({
+  res.status(err.statusCode ?? 500).json({
     status: err.status ?? 'error',
     message: err.message ?? 'something went wrong contact admin',
     errors: env.NODE_ENV !== 'production' ? err.errors : ''

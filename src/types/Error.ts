@@ -1,5 +1,5 @@
 export default interface ErrorResponse {
-  code?: number
+  statusCode?: number
   message?: string
   status?: string
   errors: any
