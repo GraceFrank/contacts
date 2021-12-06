@@ -1,3 +1,5 @@
+import { ObjectId, Document } from 'mongoose'
+
 export interface IContactEdit {
   firstName?: string
   lastName?: string
@@ -5,12 +7,13 @@ export interface IContactEdit {
   phone?: string
 }
 
-export interface IContactLog {
-  from: IContactEdit
-  to: IContactEdit
-}
-
 export enum ContactLogStatus {
   CREATED = 'created',
   UPDATED = 'updated'
+}
+export interface IContactLog extends Document {
+  from: IContactEdit
+  to: IContactEdit
+  status: ContactLogStatus
+  contactId: ObjectId
 }

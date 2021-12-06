@@ -1,6 +1,6 @@
 import { Document } from 'mongoose'
 
-export interface IContact {
+export interface IContact extends Document {
   firstName: string
   lastName: string
   email: string

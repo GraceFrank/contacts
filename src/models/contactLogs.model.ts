@@ -1,58 +1,61 @@
 import { Schema, model, Types } from 'mongoose'
-import { IContactLog } from '../types/contactLog'
+import { ContactLogStatus, IContactLog } from '../types/contactLog'
 
-const contactChangeSchema = new Schema({
-  firstName: {
-    type: String,
-    required: false,
-    trim: true,
-    lowercase: true,
-    minlength: 4,
-    maxlength: 255
+const contactChangeSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true,
+      minlength: 4,
+      maxlength: 255
+    },
+
+    lastName: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true,
+      minlength: 4,
+      maxlength: 255
+    },
+
+    email: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true,
+      minlength: 4,
+      maxlength: 255,
+      unique: true
+    },
+
+    phone: {
+      type: String,
+      required: false,
+      trim: true,
+      lowercase: true,
+      minlength: 4,
+      maxlength: 15
+    }
   },
-
-  lastName: {
-    type: String,
-    required: false,
-    trim: true,
-    lowercase: true,
-    minlength: 4,
-    maxlength: 255
-  },
-
-  email: {
-    type: String,
-    required: false,
-    trim: true,
-    lowercase: true,
-    minlength: 4,
-    maxlength: 255,
-    unique: true
-  },
-
-  phone: {
-    type: String,
-    required: false,
-    trim: true,
-    lowercase: true,
-    minlength: 4,
-    maxlength: 255
-  }
-})
+  { timestamps: true }
+)
 
 const contactLogSchema = new Schema({
   status: {
-    enum: ['created'],
+    type: String,
+    enum: [ContactLogStatus.CREATED, ContactLogStatus.UPDATED],
     required: true
   },
-  from: { type: contactChangeSchema, required: true },
+  from: { type: contactChangeSchema },
   to: { type: contactChangeSchema, required: true },
-
-  contact: {
+  contactId: {
     type: Types.ObjectId,
     ref: 'contacts',
     required: true
   }
 })
 
-export default model<IContactLog>('contactLogs', contactLogSchema)
+export default model<IContactLog>('contact-logs', contactLogSchema)
