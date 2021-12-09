@@ -9,10 +9,11 @@
     "start:prod": "npm run build && node ./dist/src/server.js",
     "build": "npx tsc",
     "dev:nodemon": "./node_modules/nodemon/bin/nodemon.js",
-    "test": "jest"
+    "test": "export NODE_ENV=test && jest --watchAll"
   },
   "dependencies": {
     "@types/morgan": "^1.9.3",
+    "@types/supertest": "^2.0.11",
     "cors": "^2.8.5",
     "dotenv": "10.0.0",
     "express": "4.17.1",
@@ -22,6 +23,7 @@
     "mongoose": "6.0.12",
     "mongoose-unique-validator": "3.0.0",
     "morgan": "^1.10.0",
+    "nanoid": "^3.1.30",
     "ts-jest": "^27.1.0",
     "winston": "3.3.3",
     "winston-timestamp-colorize": "^1.1.0"
@@ -41,7 +43,7 @@
     "jest": "27.3.1",
     "nodemon": "^2.0.15",
     "prettier": "2.4.1",
-    "supertest": "6.1.6",
+    "supertest": "^6.1.6",
     "ts-node": "10.4.0",
     "typescript": "4.4.4"
   }

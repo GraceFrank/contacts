@@ -16,4 +16,5 @@ export interface IContactLog extends Document {
   to: IContactEdit
   status: ContactLogStatus
   contactId: ObjectId
+  createdAt: Date
 }

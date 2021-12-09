@@ -9,7 +9,7 @@ const createContact = async (
 ): Promise<void> => {
   try {
     const newContact: IContact = await Contact.create(req.body)
-    res.status(201).json(newContact)
+    res.status(201).send({ data: newContact, message: 'created' })
   } catch (error) {
     if (error.code && error.code === 11000) {
       error.statusCode = 400

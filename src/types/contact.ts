@@ -5,4 +5,7 @@ export interface IContact extends Document {
   lastName: string
   email: string
   phone: string
+  id: string
+  createdAt: Date
+  updatedAt: Date
 }

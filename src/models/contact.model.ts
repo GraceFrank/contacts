@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import { IContact } from '../types/contact'
 import { model, Schema } from 'mongoose'
 import ContactLogsModel from './contactLogs.model'
@@ -43,6 +44,11 @@ const contactSchema: Schema = new Schema(
 )
 
 // hooks
+
+contactSchema.pre('save', async function (next) {
+  this.id = nanoid()
+  next()
+})
 
 contactSchema.post('save', async function (doc, next) {
   await ContactLogsModel.create({

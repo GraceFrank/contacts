@@ -8,3 +8,20 @@ async function connectDB() {
 }
 
 export default connectDB
+
+export async function closeDB() {
+  await mongoose.connection.dropDatabase()
+  await mongoose.connection.close()
+}
+
+export async function clearDB(Model) {
+  if (Model) {
+    await Model.deleteMany()
+    return
+  }
+  const collections = mongoose.connection.collections
+  for (const key in collections) {
+    const collection = collections[key]
+    await collection.deleteMany({})
+  }
+}
